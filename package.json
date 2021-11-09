@@ -1,0 +1,43 @@
+{
+  "name": "convocontracts",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy:local": "npx hardhat run scripts/deploy.js --network hardhat",
+    "deploy:matic": "npx hardhat run scripts/deploy.js --network matic",
+    "deploy:rinkeby": "npx hardhat run scripts/deploy.js --network rinkeby",
+    "test": "npx hardhat test",
+    "flatten": "npx hardhat flatten ./contracts/Omnid.sol > flat.sol",
+    "check": "npm run test && npm run deploy:local"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anudit/convocontracts/contracts.git"
+  },
+  "author": "Anudit Nagar",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/anudit/convocontracts/contracts/issues"
+  },
+  "homepage": "https://github.com/anudit/convocontracts/contracts#readme",
+  "dependencies": {
+    "@chainlink/contracts": "^0.2.2",
+    "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "@nomiclabs/hardhat-etherscan": "^2.1.7",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^4.3.2",
+    "base64-sol": "^1.1.0",
+    "chai": "^4.2.0",
+    "dotenv": "^10.0.0",
+    "ethereum-waffle": "^3.2.2",
+    "ethers": "^5.5.1",
+    "hardhat": "^2.6.8",
+    "hardhat-abi-exporter": "^2.3.1",
+    "hardhat-contract-sizer": "^2.1.1",
+    "hardhat-gas-reporter": "^1.0.4"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.15"
+  }
+}

@@ -1,0 +1,24 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='4.69 4.41 250 400'>
+
+  <path id='bg' fill='#1b2798' d='M9.65 8.04h241.16v329.58H9.65z'/>
+  <path id='frame' fill='#f9f9f9' d='M4.69 16.41v375c0 6.6 5.4 12 12 12h226c6.6 0 12-5.4 12-12v-375c0-6.6-5.4-12-12-12h-226c-6.6 0-12 5.4-12 12Zm245.5 321h-241V17.91c0-5.5 4.5-10 10-10h221c5.5 0 10 4.5 10 10v319.5Z'/>
+
+  <g id='details' fill='#b3b3b3'>
+    <text font-family='Consolas' font-size='10' style='white-space:pre' transform='translate(24.49 379.68)'>HOOLEY.ETH</text>
+    <text font-family='Arial' font-size='14' style='white-space:pre' transform='translate(24.4 368.02)'>Gavin Belson</text>
+  </g>
+
+  <g id='logo' fill='#ccc' transform='translate(4.69 3.41)'>
+    <path d='M209.3 361.1a7.06 7.06 0 0 0 0 9.9c2.7 2.7 7.2 2.7 9.9 0l-4.9-4.9 4.9-4.9a6.8 6.8 0 0 0-9.9-.1z'/>
+    <circle cx='222.3' cy='366' r='2.9'/>
+  </g>
+
+  <text id='score' fill='#fff' font-family='Verdana' font-size='39.33' letter-spacing='-1.1' opacity='.65' style='white-space:pre' transform='matrix(.8791 0 0 1 36.43 67.11)'>289</text>
+
+  <linearGradient id='chipGradient' x1='197.32' x2='225.96' y1='34.06' y2='73.76' gradientTransform='translate(4.69 3.41)' gradientUnits='userSpaceOnUse'>
+    <stop offset='.16' stop-color='#fff'/>
+    <stop offset='.93' stop-color='gray'/>
+  </linearGradient>
+  <path id='chip' fill='url(#chipGradient)' d='M204.09 59.41v-2.6h-5.2v9.6c0 2.7 2.5 5 5.5 5h5.5v-8.8h-2.6c-1.5 0-3.2-1.4-3.2-3.2Zm1.3-12.5v12.3c0 1.1 1 2 2.3 2h11.3c1.2 0 2.3-.9 2.3-2v-12.6c0-1-.9-1.8-1.9-1.8h-11.7c-1.2 0-2.3 1-2.3 2.1Zm-1.3 2.9h-5.2v5.5h5.2v-5.5Zm7.1 21.6h4.8v-8.8h-4.8v8.8Zm11-36.5h-4.8v8.2h1.9c2 0 3.5 1.4 3.5 3.2v2.3h4.8v-8.8c.1-2.7-2.4-4.9-5.4-4.9Zm.7 20.4h4.8v-5.5h-4.8v5.5Zm-18.8-9c0-1.8 1.6-3.2 3.2-3.2h2.6v-8.2h-5.5c-3 0-5.5 2.2-5.5 5v8.8h5.2v-2.4Zm18.8 13.1c0 1.8-1.6 3.2-3.5 3.2h-1.9v8.8h4.8c3 0 5.5-2.2 5.5-5v-9.6h-4.8v2.6Zm-6.8-24.5h-4.8v8.2h4.8v-8.2Z'/>
+
+</svg>
