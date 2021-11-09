@@ -9,7 +9,7 @@
 ===============================*/
 
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity >=0.8.4 <0.9.0;
+pragma solidity >=0.8.9 <0.9.0;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -31,6 +31,8 @@ contract Omnid is ERC721, ChainlinkClient {
     mapping(bytes32 => bool) public requestIdFulfilled;
     mapping(address => uint256) public addressToScore;
     mapping(address => string) public addressToEtching;
+    mapping(address => uint256) public addressToRefreshTime;
+    mapping(address => bool) public hasMinted;
 
     event RequestFulfilled(bytes32 indexed requestId, uint256 indexed score);
     event ScoreUpdated(address indexed who, uint256 indexed score);
@@ -76,6 +78,7 @@ contract Omnid is ERC721, ChainlinkClient {
     function constructTokenURI(address _add, uint256 _tokenId) public view returns (string memory) {
 
         uint256 score = addressToScore[_add];
+        uint256 refreshTime = addressToRefreshTime[_add];
         string memory etching = addressToEtching[_add];
 
         bytes memory image = abi.encodePacked(
@@ -89,11 +92,10 @@ contract Omnid is ERC721, ChainlinkClient {
         );
 
         bytes memory json = abi.encodePacked(
-            '{',
-                '"name":"OMNID: ', _tokenId.toString(), '",',
-                '"description":"OMIND: ', _tokenId.toString(), '",',
-                '"image":"data:image/svg+xml;base64,', Base64.encode(image),'"',
-            '}'
+            '{"name":"OMNID: ', _tokenId.toString(),
+            '","description":"OMIND: ', _tokenId.toString(),
+            '","attributes":[{"trait_type": "score","value":', score.toString(), '},{"trait_type": "etching","value":"',etching, '"}, {"display_type": "date", "trait_type": "Last Updated","value":', refreshTime.toString(),
+            '}],"image":"data:image/svg+xml;base64,', Base64.encode(image),'"}'
         );
 
         return string(abi.encodePacked("data:application/json;base64,",Base64.encode(json)));
@@ -101,6 +103,7 @@ contract Omnid is ERC721, ChainlinkClient {
     }
 
     function createId(address _for, string memory _etching) external {
+        require(hasMinted[_for] == true, "OMNID: ID already issued");
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
 
         string memory reqApiAddress = string(abi.encodePacked(
@@ -127,12 +130,16 @@ contract Omnid is ERC721, ChainlinkClient {
         uint256 newItemId = tokenCounter;
         address _add = requestIdToAddress[_requestId];
         addressToScore[_add] = _score;
+        addressToRefreshTime[_add] = block.timestamp;
+        hasMinted[_add] = true;
 
         _safeMint(_add, newItemId);
         tokenCounter += 1;
+        emit ScoreUpdated(_add, _score);
     }
 
     function refreshScore(uint256 _tokenId) external {
+        require(_tokenId < tokenCounter, "OMNID: Invalid _tokenId");
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfillRefresh.selector);
         address tokenOwner = ownerOf(_tokenId);
 
@@ -157,6 +164,7 @@ contract Omnid is ERC721, ChainlinkClient {
         emit RequestFulfilled(_requestId, _score);
         address add = requestIdToAddress[_requestId];
         addressToScore[add] = _score;
+        addressToRefreshTime[add] = block.timestamp;
         emit ScoreUpdated(add, _score);
     }
 
@@ -198,6 +206,7 @@ contract Omnid is ERC721, ChainlinkClient {
         uint256 newItemId = tokenCounter;
         addressToScore[_for] = _score;
         addressToEtching[_for] = _etching;
+        addressToRefreshTime[_for] = block.timestamp;
         _safeMint(_for, newItemId);
         tokenCounter += 1;
 

@@ -23,7 +23,8 @@ describe("Omnid", accounts => {
             await Omnid.createIdDev(owner.address, 50, "XDXDXDXD");
 
             let tokenURI = await Omnid.tokenURI(0);
-            console.log(tokenURI)
+            let metadata = JSON.parse(Buffer.from(tokenURI.split(',')[1], 'base64').toString('ascii'));
+            console.log(metadata)
             expect(true).to.equal(true);
         });
 
