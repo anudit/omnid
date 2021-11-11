@@ -35,10 +35,10 @@ module.exports = {
     rinkeby: infuraNetwork("rinkeby", 4, 6283185),
     kovan: infuraNetwork("kovan", 42, 6283185),
     goerli: infuraNetwork("goerli", 5, 6283185),
-    matic: {
+    mumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/qqQIm10pMOOsdmlV3p7NYIPt91bB0TL4`,
       chainId: 80001,
-      gas: 8000000,
+      gas: 20000000, // 20M
       accounts: mnemonic ? { mnemonic } : undefined
     }
   },

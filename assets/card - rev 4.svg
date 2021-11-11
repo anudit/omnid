@@ -1,0 +1,27 @@
+<svg id='omnid' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 250 400'>
+	<defs>
+		<linearGradient id='chipGradient' x1='125.05' y1='28.81' x2='124.95' y2='336.78' gradientUnits='userSpaceOnUse'>
+			<stop offset='0.19' stop-opacity='0.4'/>
+			<stop offset='1' stop-color='gray' stop-opacity='0'/>
+		</linearGradient>
+		<linearGradient id='tintGradeint' x1='194.93' y1='370.57' x2='221' y2='334.44' gradientTransform='matrix(1, 0, 0, -1, 4.69, 403.41)' gradientUnits='userSpaceOnUse'>
+			<stop offset='0.16' stop-color='#fff'/>
+			<stop offset='0.93' stop-color='gray'/>
+		</linearGradient>
+	</defs>
+
+	<path id='skin' d='M10.47,0H239.53A10.47,10.47,0,0,1,250,10.47V340a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V10.47A10.47,10.47,0,0,1,10.47,0Z' style='fill:#1b2798'/>
+
+    <path id='tint' d='M10.47,0H239.53A10.47,10.47,0,0,1,250,10.47V340a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V10.47A10.47,10.47,0,0,1,10.47,0Z' style='fill:url(#chipGradient)'/>
+	<path id='base' d='M0,340H250a0,0,0,0,1,0,0v48a12,12,0,0,1-12,12H12A12,12,0,0,1,0,388V340a0,0,0,0,1,0,0Z' style='fill:#f9f9f9'/>
+	<g id='details'>
+		<text transform='translate(18.59 378.06) scale(1.02 1)' style='isolation:isolate;font-size:9.739181518554688px;fill:#b3b3b3;font-family:Consolas'>07/23</text>
+		<text transform='translate(18.5 366.7) scale(1.02 1)' style='isolation:isolate;font-size:13.634854316711426px;fill:#b3b3b3;font-family:ArialMT, Arial'>Gavin Belson</text>
+	</g>
+	<g id='logo'>
+		<path d='M211.1,363.68a9,9,0,0,0,12.7,12.72l-6.29-6.3,6.29-6.29a8.72,8.72,0,0,0-12.33-.49C211.34,363.43,211.22,363.56,211.1,363.68Z' transform='translate(0 0)' style='fill:#ccc'/>
+		<ellipse cx='227.78' cy='369.98' rx='3.72' ry='3.73' style='fill:#ccc'/>
+	</g>
+	<text id='score' transform='translate(31.74 62.7) scale(0.88 1)' style='opacity:0.6499999761581421;isolation:isolate;font-size:39.33000183105469px;fill:#fff;font-family:Verdana;letter-spacing:-0.02700198407225477em'>289</text>
+	<path id='chip' d='M201.53,52.8V50.43H196.8v8.74a4.86,4.86,0,0,0,5,4.55h5v-8h-2.37A3.06,3.06,0,0,1,201.53,52.8Zm1.19-11.38V52.61a2,2,0,0,0,2.09,1.82h10.28a2,2,0,0,0,2.09-1.82V41.15a1.7,1.7,0,0,0-1.72-1.64H204.81a2.09,2.09,0,0,0-2.09,1.91Zm-1.19,2.64H196.8v5h4.73ZM208,63.72h4.37V54.43H208ZM218,30.5h-4.36V38h1.72a3,3,0,0,1,3.19,2.91V43h4.37V35C223,32.5,220.73,30.5,218,30.5Zm.64,18.56H223v-5h-4.37Zm-17.11-8.19A3,3,0,0,1,204.44,38h2.37V30.5h-5a4.8,4.8,0,0,0-5,4.55v8h4.73ZM218.64,52.8a3.06,3.06,0,0,1-3.18,2.91h-1.73v8h4.36a4.8,4.8,0,0,0,5-4.55V50.43h-4.37V52.8Zm-6.19-22.3h-4.37v9h4.37Z' transform='translate(0 0)' style='fill:url(#tintGradeint)'/>
+</svg>

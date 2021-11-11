@@ -16,6 +16,17 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
 
+interface INftDescriptor {
+    struct IdDetails {
+        uint256 score;
+        uint256 refreshTime;
+        uint256 skinIndex;
+        string etching;
+    }
+    function constructTokenURI(uint256 _tokenId, IdDetails calldata _deets) external view returns (string memory);
+    function isValidSkinId(uint256 _skinId) external view returns(bool);
+}
+
 contract Omnid is ERC721, ChainlinkClient {
 
     using Strings for uint256;
@@ -29,22 +40,25 @@ contract Omnid is ERC721, ChainlinkClient {
 
     mapping(bytes32 => address) public requestIdToAddress;
     mapping(bytes32 => bool) public requestIdFulfilled;
-    mapping(address => uint256) public addressToScore;
-    mapping(address => string) public addressToEtching;
-    mapping(address => uint256) public addressToRefreshTime;
-    mapping(address => bool) public hasMinted;
-
     event RequestFulfilled(bytes32 indexed requestId, uint256 indexed score);
-    event ScoreUpdated(address indexed who, uint256 indexed score);
 
     // OMNID
 
     uint256 public tokenCounter;
     address public admin;
+    INftDescriptor public descriptor;
 
-    constructor() ERC721("Omnid", "OMNID") {
+    mapping(address => INftDescriptor.IdDetails) public addressToIdDetails;
+    mapping(address => bool) public hasMinted;
+
+    event ScoreUpdated(address indexed who, uint256 indexed score);
+    event SkinUpdated(address indexed who, uint256 indexed tokenId, uint256 skinId);
+    event EtchingUpdated(address indexed who, uint256 indexed tokenId, string etching);
+
+    constructor(address _descriptorAddress) ERC721("Omnid", "OMNID") {
         tokenCounter = 0;
         admin = msg.sender;
+        descriptor = INftDescriptor(_descriptorAddress);
 
         uint256 chainId;
         assembly { chainId := chainid() }
@@ -52,7 +66,7 @@ contract Omnid is ERC721, ChainlinkClient {
             setChainlinkOracle(0x0bDDCD124709aCBf9BB3F824EbC61C87019888bb);
             setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
             jobId = "2bb15c3f9cfc4336b95012872ff05092";
-            fee = 0.01  * (10 ** 18); //  LINK
+            fee = 0.01 * (10 ** 18); //  LINK
         }
     }
 
@@ -66,50 +80,29 @@ contract Omnid is ERC721, ChainlinkClient {
         require(_link.transfer(msg.sender, _link.balanceOf(address(this))), "Unable to transfer");
     }
 
+    function updateDescriptor(address _descriptorAddress) public onlyAdmin {
+        descriptor = INftDescriptor(_descriptorAddress);
+    }
+
     function totalSupply() external view returns (uint256) {
         return tokenCounter;
     }
 
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        address ownerAddress = ownerOf(tokenId);
-        return constructTokenURI(ownerAddress, tokenId);
+    function tokenURI(uint256 _tokenId) public view virtual override returns (string memory uri) {
+        address ownerAddress = ownerOf(_tokenId);
+        INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
+        uri = descriptor.constructTokenURI(_tokenId, deets);
     }
 
-    function constructTokenURI(address _add, uint256 _tokenId) public view returns (string memory) {
-
-        uint256 score = addressToScore[_add];
-        uint256 refreshTime = addressToRefreshTime[_add];
-        string memory etching = addressToEtching[_add];
-
-        bytes memory image = abi.encodePacked(
-            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='4.69 4.41 250 400'><path id='bg' fill='#1b2798' d='M9.65 8.04h241.16v329.58H9.65z'/><path id='frame' fill='#f9f9f9' d='M4.69 16.41v375c0 6.6 5.4 12 12 12h226c6.6 0 12-5.4 12-12v-375c0-6.6-5.4-12-12-12h-226c-6.6 0-12 5.4-12 12Zm245.5 321h-241V17.91c0-5.5 4.5-10 10-10h221c5.5 0 10 4.5 10 10v319.5Z'/><g id='details' fill='#b3b3b3'><text font-family='Arial' font-size='14' style='white-space:pre' transform='translate(24.4 368.02)'>",
-            etching,
-            "</text><text font-family='Consolas' font-size='10' style='white-space:pre' transform='translate(24.49 379.68)'>0x",
-            prettyAddress(_add)," #",_tokenId.toString(),
-            "</text></g><g id='logo' fill='#ccc' transform='translate(4.69 3.41)'><path d='M209.3 361.1a7.06 7.06 0 0 0 0 9.9c2.7 2.7 7.2 2.7 9.9 0l-4.9-4.9 4.9-4.9a6.8 6.8 0 0 0-9.9-.1z'/><circle cx='222.3' cy='366' r='2.9'/></g><text id='score' fill='#fff' font-family='Verdana' font-size='39.33' letter-spacing='-1.1' opacity='.65' style='white-space:pre' transform='matrix(.8791 0 0 1 36.43 67.11)'>",
-            score.toString(),
-            "</text><linearGradient id='chipGradient' x1='197.32' x2='225.96' y1='34.06' y2='73.76' gradientTransform='translate(4.69 3.41)' gradientUnits='userSpaceOnUse'><stop offset='.16' stop-color='#fff'/><stop offset='.93' stop-color='gray'/></linearGradient><path id='chip' fill='url(#chipGradient)' d='M204.09 59.41v-2.6h-5.2v9.6c0 2.7 2.5 5 5.5 5h5.5v-8.8h-2.6c-1.5 0-3.2-1.4-3.2-3.2Zm1.3-12.5v12.3c0 1.1 1 2 2.3 2h11.3c1.2 0 2.3-.9 2.3-2v-12.6c0-1-.9-1.8-1.9-1.8h-11.7c-1.2 0-2.3 1-2.3 2.1Zm-1.3 2.9h-5.2v5.5h5.2v-5.5Zm7.1 21.6h4.8v-8.8h-4.8v8.8Zm11-36.5h-4.8v8.2h1.9c2 0 3.5 1.4 3.5 3.2v2.3h4.8v-8.8c.1-2.7-2.4-4.9-5.4-4.9Zm.7 20.4h4.8v-5.5h-4.8v5.5Zm-18.8-9c0-1.8 1.6-3.2 3.2-3.2h2.6v-8.2h-5.5c-3 0-5.5 2.2-5.5 5v8.8h5.2v-2.4Zm18.8 13.1c0 1.8-1.6 3.2-3.5 3.2h-1.9v8.8h4.8c3 0 5.5-2.2 5.5-5v-9.6h-4.8v2.6Zm-6.8-24.5h-4.8v8.2h4.8v-8.2Z'/></svg>"
-        );
-
-        bytes memory json = abi.encodePacked(
-            '{"name":"OMNID: ', _tokenId.toString(),
-            '","description":"OMIND: ', _tokenId.toString(),
-            '","attributes":[{"trait_type": "score","value":', score.toString(), '},{"trait_type": "etching","value":"',etching, '"}, {"display_type": "date", "trait_type": "Last Updated","value":', refreshTime.toString(),
-            '}],"image":"data:image/svg+xml;base64,', Base64.encode(image),'"}'
-        );
-
-        return string(abi.encodePacked("data:application/json;base64,",Base64.encode(json)));
-
-    }
-
-    function createId(address _for, string memory _etching) external {
+    function createId(address _for, string memory _etching, uint256 _skinIndex) external {
         require(hasMinted[_for] == true, "OMNID: ID already issued");
+        require(descriptor.isValidSkinId(_skinIndex) == true, "OMNID: Invalid Skin");
+
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
 
         string memory reqApiAddress = string(abi.encodePacked(
-            "https://theconvo.space/api/identity?address=",
-            addressToString(_for),
-            "&apikey=CONVO"
+            "https://theconvo.space/api/identity?apikey=CONVO&address=",
+            addressToString(_for)
         ));
 
         request.add("get", reqApiAddress);
@@ -120,7 +113,10 @@ contract Omnid is ERC721, ChainlinkClient {
 
         bytes32 requestId = sendChainlinkRequest(request, fee);
         requestIdToAddress[requestId] = _for;
-        addressToEtching[_for] = _etching;
+
+        INftDescriptor.IdDetails memory newDeets = INftDescriptor.IdDetails( 0, 0, _skinIndex, _etching );
+        addressToIdDetails[_for] = newDeets;
+
     }
 
     function fulfill(bytes32 _requestId, uint256 _score) public recordChainlinkFulfillment(_requestId) {
@@ -129,8 +125,12 @@ contract Omnid is ERC721, ChainlinkClient {
 
         uint256 newItemId = tokenCounter;
         address _add = requestIdToAddress[_requestId];
-        addressToScore[_add] = _score;
-        addressToRefreshTime[_add] = block.timestamp;
+
+        INftDescriptor.IdDetails memory newDeets = addressToIdDetails[_add];
+        newDeets.score = _score;
+        newDeets.refreshTime = block.timestamp;
+        addressToIdDetails[_add] = newDeets;
+
         hasMinted[_add] = true;
 
         _safeMint(_add, newItemId);
@@ -163,15 +163,36 @@ contract Omnid is ERC721, ChainlinkClient {
         require(requestIdFulfilled[_requestId] == false, "Omnid:Request already Fulfilled");
         emit RequestFulfilled(_requestId, _score);
         address add = requestIdToAddress[_requestId];
-        addressToScore[add] = _score;
-        addressToRefreshTime[add] = block.timestamp;
+
+        INftDescriptor.IdDetails memory newDeets = addressToIdDetails[add];
+        newDeets.score = _score;
+        newDeets.refreshTime = block.timestamp;
+        addressToIdDetails[add] = newDeets;
+
         emit ScoreUpdated(add, _score);
     }
 
-    // Utility Functions
-    function prettyAddress(address x) internal pure returns (string memory) {
-        string memory add = addressToString(x);
-        return string(abi.encodePacked(substring(add, 0, 3),"...",substring(add, 37, 40)));
+    function updateSkin(uint256 _tokenId, uint256 _newSkinId) public {
+        address tokenOwner = ownerOf(_tokenId);
+        require(tokenOwner == msg.sender, "Omnid:Only owner can update Skin.");
+        require(descriptor.isValidSkinId(_newSkinId) == true, "OMNID: Invalid Skin");
+
+        INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
+        newDeets.skinIndex = _newSkinId;
+        addressToIdDetails[tokenOwner] = newDeets;
+
+        emit SkinUpdated(tokenOwner, _tokenId, _newSkinId);
+    }
+
+    function updateEtching(uint256 _tokenId, string memory _newEtching) public {
+        address tokenOwner = ownerOf(_tokenId);
+        require(tokenOwner == msg.sender, "Omnid:Only owner can update Ethching.");
+
+        INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
+        newDeets.etching = _newEtching;
+        addressToIdDetails[tokenOwner] = newDeets;
+
+        emit EtchingUpdated(tokenOwner, _tokenId, _newEtching);
     }
 
     function addressToString(address x) internal pure returns (string memory) {
@@ -191,22 +212,14 @@ contract Omnid is ERC721, ChainlinkClient {
         else return bytes1(uint8(b) + 0x57);
     }
 
-    function substring(string memory str, uint startIndex, uint endIndex) internal pure returns (string memory) {
-        bytes memory strBytes = bytes(str);
-        bytes memory result = new bytes(endIndex-startIndex);
-        for(uint i = startIndex; i < endIndex; i++) {
-            result[i-startIndex] = strBytes[i];
-        }
-        return string(result);
-    }
-
     // Only for Testing.
-    function createIdDev(address _for, uint256 _score, string memory _etching) external payable onlyAdmin {
+    function createIdDev(address _for, uint256 _score, string memory _etching, uint256 _skinIndex) external payable onlyAdmin {
 
         uint256 newItemId = tokenCounter;
-        addressToScore[_for] = _score;
-        addressToEtching[_for] = _etching;
-        addressToRefreshTime[_for] = block.timestamp;
+
+        INftDescriptor.IdDetails memory newDeets = INftDescriptor.IdDetails( _score, block.timestamp, _skinIndex, _etching );
+        addressToIdDetails[_for] = newDeets;
+
         _safeMint(_for, newItemId);
         tokenCounter += 1;
 

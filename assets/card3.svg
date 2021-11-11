@@ -1,24 +1,47 @@
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='4.69 4.41 250 400'>
-
-  <path id='bg' fill='#1b2798' d='M9.65 8.04h241.16v329.58H9.65z'/>
-  <path id='frame' fill='#f9f9f9' d='M4.69 16.41v375c0 6.6 5.4 12 12 12h226c6.6 0 12-5.4 12-12v-375c0-6.6-5.4-12-12-12h-226c-6.6 0-12 5.4-12 12Zm245.5 321h-241V17.91c0-5.5 4.5-10 10-10h221c5.5 0 10 4.5 10 10v319.5Z'/>
-
-  <g id='details' fill='#b3b3b3'>
-    <text font-family='Consolas' font-size='10' style='white-space:pre' transform='translate(24.49 379.68)'>HOOLEY.ETH</text>
-    <text font-family='Arial' font-size='14' style='white-space:pre' transform='translate(24.4 368.02)'>Gavin Belson</text>
-  </g>
-
-  <g id='logo' fill='#ccc' transform='translate(4.69 3.41)'>
-    <path d='M209.3 361.1a7.06 7.06 0 0 0 0 9.9c2.7 2.7 7.2 2.7 9.9 0l-4.9-4.9 4.9-4.9a6.8 6.8 0 0 0-9.9-.1z'/>
-    <circle cx='222.3' cy='366' r='2.9'/>
-  </g>
-
-  <text id='score' fill='#fff' font-family='Verdana' font-size='39.33' letter-spacing='-1.1' opacity='.65' style='white-space:pre' transform='matrix(.8791 0 0 1 36.43 67.11)'>289</text>
-
-  <linearGradient id='chipGradient' x1='197.32' x2='225.96' y1='34.06' y2='73.76' gradientTransform='translate(4.69 3.41)' gradientUnits='userSpaceOnUse'>
-    <stop offset='.16' stop-color='#fff'/>
-    <stop offset='.93' stop-color='gray'/>
-  </linearGradient>
-  <path id='chip' fill='url(#chipGradient)' d='M204.09 59.41v-2.6h-5.2v9.6c0 2.7 2.5 5 5.5 5h5.5v-8.8h-2.6c-1.5 0-3.2-1.4-3.2-3.2Zm1.3-12.5v12.3c0 1.1 1 2 2.3 2h11.3c1.2 0 2.3-.9 2.3-2v-12.6c0-1-.9-1.8-1.9-1.8h-11.7c-1.2 0-2.3 1-2.3 2.1Zm-1.3 2.9h-5.2v5.5h5.2v-5.5Zm7.1 21.6h4.8v-8.8h-4.8v8.8Zm11-36.5h-4.8v8.2h1.9c2 0 3.5 1.4 3.5 3.2v2.3h4.8v-8.8c.1-2.7-2.4-4.9-5.4-4.9Zm.7 20.4h4.8v-5.5h-4.8v5.5Zm-18.8-9c0-1.8 1.6-3.2 3.2-3.2h2.6v-8.2h-5.5c-3 0-5.5 2.2-5.5 5v8.8h5.2v-2.4Zm18.8 13.1c0 1.8-1.6 3.2-3.5 3.2h-1.9v8.8h4.8c3 0 5.5-2.2 5.5-5v-9.6h-4.8v2.6Zm-6.8-24.5h-4.8v8.2h4.8v-8.2Z'/>
-
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 250 400" style="enable-background:new 0 0 250 400;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#1B2798;}
+	.st1{fill:url(#BG_2_);}
+	.st2{fill:#F9F9F9;}
+	.st3{fill:#B3B3B3;}
+	.st4{font-family:'Consolas';}
+	.st5{font-size:9.7392px;}
+	.st6{font-family:'ArialMT';}
+	.st7{font-size:13.6349px;}
+	.st8{fill:#CCCCCC;}
+	.st9{opacity:0.65;fill:#FFFFFF;enable-background:new    ;}
+	.st10{font-family:'Verdana';}
+	.st11{font-size:39.33px;}
+	.st12{fill:url(#chip_1_);}
+</style>
+<path id="BG" class="st0" d="M10.5,0h229.1c5.8,0,10.5,4.7,10.5,10.5V340H0V10.5C0,4.7,4.7,0,10.5,0z"/>
+<linearGradient id="BG_2_" gradientUnits="userSpaceOnUse" x1="125.047" y1="28.8064" x2="124.9481" y2="336.7757">
+	<stop  offset="0.1917" style="stop-color:#000000;stop-opacity:0.4"/>
+	<stop  offset="1" style="stop-color:#808080;stop-opacity:0"/>
+</linearGradient>
+<path id="BG_1_" class="st1" d="M10.5,0h229.1c5.8,0,10.5,4.7,10.5,10.5V340H0V10.5C0,4.7,4.7,0,10.5,0z"/>
+<path id="Base" class="st2" d="M12,400h226c6.6,0,12-5.4,12-12v-48H0v48C0,394.6,5.4,400,12,400z"/>
+<g id="details">
+	<text transform="matrix(1.0235 0 0 1 18.5903 378.0586)" class="st3 st4 st5">07/23</text>
+	<text transform="matrix(1.0235 0 0 1 18.5 366.7031)" class="st3 st6 st7">Gavin Belson</text>
+</g>
+<g id="logo" transform="translate(4.69 3.41)">
+	<path class="st8" d="M206.4,360.3c-3.5,3.5-3.5,9.2,0,12.7c3.5,3.5,9.2,3.5,12.7,0l-6.3-6.3l6.3-6.3c-3.3-3.5-8.8-3.8-12.3-0.5
+		C206.7,360,206.5,360.1,206.4,360.3z"/>
+	<ellipse class="st8" cx="223.1" cy="366.6" rx="3.7" ry="3.7"/>
+</g>
+<text id="score" transform="matrix(0.8791 0 0 1 31.7397 62.6999)" class="st9 st10 st11">289</text>
+<linearGradient id="chip_1_" gradientUnits="userSpaceOnUse" x1="194.9334" y1="370.5688" x2="220.9968" y2="334.4405" gradientTransform="matrix(1 0 0 -1 4.69 403.41)">
+	<stop  offset="0.16" style="stop-color:#FFFFFF"/>
+	<stop  offset="0.93" style="stop-color:#808080"/>
+</linearGradient>
+<path id="chip" class="st12" d="M201.5,52.8v-2.4h-4.7v8.7c0,2.5,2.3,4.6,5,4.6h5v-8h-2.4C203.1,55.7,201.5,54.4,201.5,52.8z
+	 M202.7,41.4v11.2c0,1,0.9,1.8,2.1,1.8h10.3c1.1,0,2.1-0.8,2.1-1.8V41.1c0-0.9-0.8-1.6-1.7-1.6h-10.6
+	C203.7,39.5,202.7,40.4,202.7,41.4L202.7,41.4z M201.5,44.1h-4.7v5h4.7V44.1z M208,63.7h4.4v-9.3H208V63.7z M218,30.5h-4.4V38h1.7
+	c1.8,0,3.2,1.3,3.2,2.9V43h4.4v-8C223,32.5,220.7,30.5,218,30.5z M218.6,49.1h4.4v-5h-4.4V49.1z M201.5,40.9c0-1.6,1.5-2.9,2.9-2.9
+	h2.4v-7.5h-5c-2.7,0-5,2-5,4.6v8h4.7C201.5,43.1,201.5,40.9,201.5,40.9z M218.6,52.8c0,1.6-1.5,2.9-3.2,2.9h-1.7v8h4.4
+	c2.7,0,5-2,5-4.6v-8.7h-4.4L218.6,52.8L218.6,52.8z M212.5,30.5h-4.4v9h4.4V30.5z"/>
 </svg>
