@@ -94,6 +94,10 @@ contract Omnid is ERC721, ChainlinkClient {
         uri = descriptor.constructTokenURI(_tokenId, deets);
     }
 
+    function getScore(address _add) external view returns(uint256) {
+        return addressToIdDetails[_add].score;
+    }
+
     function createId(address _for, string memory _etching, uint256 _skinIndex) external {
         require(hasMinted[_for] == true, "OMNID: ID already issued");
         require(descriptor.isValidSkinId(_skinIndex) == true, "OMNID: Invalid Skin");
@@ -213,7 +217,7 @@ contract Omnid is ERC721, ChainlinkClient {
     }
 
     // Only for Testing.
-    function createIdDev(address _for, uint256 _score, string memory _etching, uint256 _skinIndex) external payable onlyAdmin {
+    function createIdDev(address _for, uint256 _score, string memory _etching, uint256 _skinIndex) external onlyAdmin {
 
         uint256 newItemId = tokenCounter;
 
