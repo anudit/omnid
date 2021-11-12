@@ -26,7 +26,7 @@ describe("Omnid", () => {
         });
 
         it("Should Mint NFTs", async function () {
-            await omnid.createIdDev(owner.address, 50, "XDXDXDXD", 1);
+            await omnid.createIdDev(owner.address, 50, ethers.utils.formatBytes32String("XDXDXDXD"), 1);
 
             let tokenURI = await omnid.tokenURI(0);
             let metadata = tokenUriToJson(tokenURI);
@@ -39,8 +39,6 @@ describe("Omnid", () => {
             await nftDescriptor.addSkin(skin);
 
             let skinCount = await nftDescriptor.skinCounter();
-
-            console.log(metadata);
 
             expect(skinCount).to.equal(3);
 

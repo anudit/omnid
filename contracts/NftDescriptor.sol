@@ -9,10 +9,11 @@
 ===============================*/
 
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity >=0.8.9 <0.9.0;
+pragma solidity >=0.8.10 <0.9.0;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
+
 contract NftDescriptor {
 
     using Strings for uint256;
@@ -21,7 +22,7 @@ contract NftDescriptor {
         uint256 score;
         uint256 refreshTime;
         uint256 skinIndex;
-        string etching;
+        bytes32 etching;
     }
 
     address public admin;
@@ -78,7 +79,7 @@ contract NftDescriptor {
         uint256 _score = _deets.score;
         uint256 _refreshTime = _deets.refreshTime;
         uint256 skinIndex = _deets.skinIndex;
-        string memory _etching = _deets.etching;
+        string memory _etching = bytes32ToString(_deets.etching);
 
 
         bytes memory svg = abi.encodePacked(

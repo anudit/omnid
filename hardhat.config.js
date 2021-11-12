@@ -20,12 +20,18 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.9",
+        version: "0.8.10",
         settings: {
           optimizer: {
             runs: 99999,
             enabled: true
-          }
+          },
+          metadata: {
+            // do not include the metadata hash, since this is machine dependent
+            // and we want all generated code to be deterministic
+            // https://docs.soliditylang.org/en/v0.7.6/metadata.html
+            bytecodeHash: 'none',
+          },
         }
       }
     ]
@@ -54,7 +60,7 @@ module.exports = {
     path: './abi',
     clear: true,
     flat: true,
-    only: ['Omnid'],
+    only: ['Omnid', 'NftDescriptor'],
   },
   contractSizer: {
     alphaSort: true,

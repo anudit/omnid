@@ -9,7 +9,7 @@
 ===============================*/
 
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity >=0.8.9 <0.9.0;
+pragma solidity >=0.8.10 <0.9.0;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -21,7 +21,7 @@ interface INftDescriptor {
         uint256 score;
         uint256 refreshTime;
         uint256 skinIndex;
-        string etching;
+        bytes32 etching;
     }
     function constructTokenURI(uint256 _tokenId, IdDetails calldata _deets) external view returns (string memory);
     function isValidSkinId(uint256 _skinId) external view returns(bool);
@@ -47,18 +47,20 @@ contract Omnid is ERC721, ChainlinkClient {
     uint256 public tokenCounter;
     address public admin;
     INftDescriptor public descriptor;
+    string base;
 
     mapping(address => INftDescriptor.IdDetails) public addressToIdDetails;
     mapping(address => bool) public hasMinted;
 
     event ScoreUpdated(address indexed who, uint256 indexed score);
     event SkinUpdated(address indexed who, uint256 indexed tokenId, uint256 skinId);
-    event EtchingUpdated(address indexed who, uint256 indexed tokenId, string etching);
+    event EtchingUpdated(address indexed who, uint256 indexed tokenId, bytes32 etching);
 
     constructor(address _descriptorAddress) ERC721("Omnid", "OMNID") {
         tokenCounter = 0;
         admin = msg.sender;
         descriptor = INftDescriptor(_descriptorAddress);
+        base = "https://theconvo.space/api/identity?apikey=CSCpPwHnkB3niBJiUjy92YGP6xVkVZbWfK8xriDO&address=";
 
         uint256 chainId;
         assembly { chainId := chainid() }
@@ -77,11 +79,15 @@ contract Omnid is ERC721, ChainlinkClient {
 
     function withdrawLink() public onlyAdmin {
         LinkTokenInterface _link = LinkTokenInterface(chainlinkTokenAddress());
-        require(_link.transfer(msg.sender, _link.balanceOf(address(this))), "Unable to transfer");
+        require(_link.transfer(admin, _link.balanceOf(address(this))), "Unable to transfer");
     }
 
     function updateDescriptor(address _descriptorAddress) public onlyAdmin {
         descriptor = INftDescriptor(_descriptorAddress);
+    }
+
+    function updateBase(string memory _base) public onlyAdmin {
+        base = _base;
     }
 
     function totalSupply() external view returns (uint256) {
@@ -94,20 +100,23 @@ contract Omnid is ERC721, ChainlinkClient {
         uri = descriptor.constructTokenURI(_tokenId, deets);
     }
 
+    function _beforeTokenTransfer(address _from, address _to, uint256 _tokenId) internal virtual override {
+        if (_from != address(0) && _to != address(0)){
+            revert('You cannot send your ID to someone else.');
+        }
+    }
+
     function getScore(address _add) external view returns(uint256) {
         return addressToIdDetails[_add].score;
     }
 
-    function createId(address _for, string memory _etching, uint256 _skinIndex) external {
+    function createId(address _for, bytes32 _etching, uint256 _skinIndex) external {
         require(hasMinted[_for] == true, "OMNID: ID already issued");
         require(descriptor.isValidSkinId(_skinIndex) == true, "OMNID: Invalid Skin");
 
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
 
-        string memory reqApiAddress = string(abi.encodePacked(
-            "https://theconvo.space/api/identity?apikey=CONVO&address=",
-            addressToString(_for)
-        ));
+        string memory reqApiAddress = string(abi.encodePacked(base,addressToString(_for)));
 
         request.add("get", reqApiAddress);
 
@@ -147,11 +156,7 @@ contract Omnid is ERC721, ChainlinkClient {
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfillRefresh.selector);
         address tokenOwner = ownerOf(_tokenId);
 
-        string memory reqApiAddress = string(abi.encodePacked(
-            "https://theconvo.space/api/identity?address=",
-            ownerOf(_tokenId),
-            "&apikey=CONVO"
-        ));
+        string memory reqApiAddress = string(abi.encodePacked(base, ownerOf(_tokenId)));
 
         request.add("get", reqApiAddress);
 
@@ -188,9 +193,9 @@ contract Omnid is ERC721, ChainlinkClient {
         emit SkinUpdated(tokenOwner, _tokenId, _newSkinId);
     }
 
-    function updateEtching(uint256 _tokenId, string memory _newEtching) public {
+    function updateEtching(uint256 _tokenId, bytes32 _newEtching) public {
         address tokenOwner = ownerOf(_tokenId);
-        require(tokenOwner == msg.sender, "Omnid:Only owner can update Ethching.");
+        require(tokenOwner == msg.sender, "Omnid:Only owner can update Etching.");
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
         newDeets.etching = _newEtching;
@@ -198,6 +203,8 @@ contract Omnid is ERC721, ChainlinkClient {
 
         emit EtchingUpdated(tokenOwner, _tokenId, _newEtching);
     }
+
+    // Utils
 
     function addressToString(address x) internal pure returns (string memory) {
         bytes memory s = new bytes(40);
@@ -217,7 +224,7 @@ contract Omnid is ERC721, ChainlinkClient {
     }
 
     // Only for Testing.
-    function createIdDev(address _for, uint256 _score, string memory _etching, uint256 _skinIndex) external onlyAdmin {
+    function createIdDev(address _for, uint256 _score, bytes32 _etching, uint256 _skinIndex) external onlyAdmin {
 
         uint256 newItemId = tokenCounter;
 

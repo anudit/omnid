@@ -30,21 +30,21 @@ async function main() {
     await omnid.createIdDev(
         addr1.address,
         111,
-        "AYEE",
+        ethers.utils.formatBytes32String("AYEE"),
         0
     );
 
     await omnid.createIdDev(
         addr2.address,
         222,
-        "😈",
+        ethers.utils.formatBytes32String("😈"),
         1
     );
 
     await omnid.createIdDev(
         owner.address,
         50,
-        "WAGMI",
+        ethers.utils.formatBytes32String("WAGMI"),
         2
     );
 

@@ -116,9 +116,9 @@
       },
       {
         "indexed": false,
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "etching",
-        "type": "string"
+        "type": "bytes32"
       }
     ],
     "name": "EtchingUpdated",
@@ -238,9 +238,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "etching",
-        "type": "string"
+        "type": "bytes32"
       }
     ],
     "stateMutability": "view",
@@ -304,9 +304,9 @@
         "type": "address"
       },
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_etching",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "internalType": "uint256",
@@ -332,9 +332,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_etching",
-        "type": "string"
+        "type": "bytes32"
       },
       {
         "internalType": "uint256",
@@ -732,6 +732,19 @@
   {
     "inputs": [
       {
+        "internalType": "string",
+        "name": "_base",
+        "type": "string"
+      }
+    ],
+    "name": "updateBase",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_descriptorAddress",
         "type": "address"
@@ -750,9 +763,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "string",
+        "internalType": "bytes32",
         "name": "_newEtching",
-        "type": "string"
+        "type": "bytes32"
       }
     ],
     "name": "updateEtching",
