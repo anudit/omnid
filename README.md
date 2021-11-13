@@ -21,5 +21,6 @@ Matic Mumbai config
 ```csharp
 interface IOmnid {
   function getScore(address _add_) external view returns(uint256);
+  function getIdDetails(address _add) external view returns(uint256, uint256, uint256, bytes32);
 }
 ```

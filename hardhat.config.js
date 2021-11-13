@@ -1,8 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require('hardhat-abi-exporter');
-// require('hardhat-contract-sizer');
-// require("hardhat-gas-reporter");
+require('hardhat-contract-sizer');
+require("hardhat-gas-reporter");
 require('dotenv').config()
 
 let mnemonic = process.env.MNEMONIC;
@@ -23,7 +23,7 @@ module.exports = {
         version: "0.8.10",
         settings: {
           optimizer: {
-            runs: 99999,
+            runs: 999999,
             enabled: true
           },
           metadata: {

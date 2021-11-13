@@ -56,12 +56,7 @@ contract NftDescriptor {
     }
 
     function isValidSkinId(uint256 _skinId) external view returns(bool) {
-        if (_skinId < skinCounter) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return _skinId < skinCounter ;
     }
 
     function constructDate(uint256 _refreshTime, uint256 _tokenId) internal pure returns(bytes memory) {
@@ -111,21 +106,17 @@ contract NftDescriptor {
         return string(abi.encodePacked(substring(add, 0, 3),"...",substring(add, 37, 40)));
     }
 
-    function addressToString(address x) internal pure returns (string memory) {
-        bytes memory s = new bytes(40);
-        for (uint i = 0; i < 20; i++) {
-            bytes1 b = bytes1(uint8(uint(uint160(x)) / (2**(8*(19 - i)))));
-            bytes1 hi = bytes1(uint8(b) / 16);
-            bytes1 lo = bytes1(uint8(b) - 16 * uint8(hi));
-            s[2*i] = char(hi);
-            s[2*i+1] = char(lo);
+    function addressToString(address _addr) internal pure returns (string memory) {
+        uint256 value = uint256(uint160(_addr));
+        bytes16 ALPHABET = '0123456789abcdef';
+        bytes memory buffer = new bytes(2 * 20 + 2);
+        buffer[0] = '0';
+        buffer[1] = 'x';
+        for (uint256 i = 2 * 20 + 1; i > 1; --i) {
+            buffer[i] = ALPHABET[value & 0xf];
+            value >>= 4;
         }
-        return string(s);
-    }
-
-    function char(bytes1 b) internal pure returns (bytes1 c) {
-        if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
-        else return bytes1(uint8(b) + 0x57);
+        return string(buffer);
     }
 
     function substring(string memory str, uint startIndex, uint endIndex) internal pure returns (string memory) {
