@@ -60,7 +60,6 @@ module.exports = {
     path: './abi',
     clear: true,
     flat: true,
-    only: ['Omnid', 'NftDescriptor'],
   },
   contractSizer: {
     alphaSort: true,

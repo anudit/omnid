@@ -69,7 +69,7 @@ contract NftDescriptor {
         );
     }
 
-    function constructTokenURI(uint256 _tokenId, IdDetails calldata _deets) external view returns (string memory) {
+    function constructTokenURI(uint256 _tokenId, address _address, IdDetails calldata _deets) external view returns (string memory) {
 
         uint256 _score = _deets.score;
         uint256 _refreshTime = _deets.refreshTime;

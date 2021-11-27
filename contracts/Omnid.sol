@@ -23,7 +23,7 @@ interface INftDescriptor {
         uint256 skinIndex;
         bytes32 etching;
     }
-    function constructTokenURI(uint256 _tokenId, IdDetails calldata _deets) external view returns (string memory);
+    function constructTokenURI(uint256 _tokenId, address _address, IdDetails calldata _deets) external view returns (string memory);
     function isValidSkinId(uint256 _skinId) external view returns(bool);
 }
 
@@ -97,7 +97,7 @@ contract Omnid is ERC721, ChainlinkClient {
     function tokenURI(uint256 _tokenId) public view virtual override returns (string memory uri) {
         address ownerAddress = ownerOf(_tokenId);
         INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
-        uri = descriptor.constructTokenURI(_tokenId, deets);
+        uri = descriptor.constructTokenURI(_tokenId, ownerAddress, deets);
     }
 
     function _beforeTokenTransfer(address _from, address _to, uint256 _tokenId) internal virtual override {
