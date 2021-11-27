@@ -15,6 +15,7 @@ import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
+import "./KeeperCompatible.sol";
 
 interface INftDescriptor {
     struct IdDetails {
@@ -27,7 +28,7 @@ interface INftDescriptor {
     function isValidSkinId(uint256 _skinId) external view returns(bool);
 }
 
-contract Omnid is ERC721, ChainlinkClient {
+contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
 
     using Strings for uint256;
 
@@ -41,6 +42,9 @@ contract Omnid is ERC721, ChainlinkClient {
     mapping(bytes32 => address) public requestIdToAddress;
     mapping(bytes32 => bool) public requestIdFulfilled;
     event RequestFulfilled(bytes32 indexed requestId, uint256 indexed score);
+
+    uint public lastTimeStamp;
+    uint256[] upkeepQueue;
 
     // OMNID
 
@@ -61,6 +65,7 @@ contract Omnid is ERC721, ChainlinkClient {
         admin = msg.sender;
         descriptor = INftDescriptor(_descriptorAddress);
         base = "https://theconvo.space/api/identity?apikey=CSCpPwHnkB3niBJiUjy92YGP6xVkVZbWfK8xriDO&address=";
+        lastTimeStamp = block.timestamp;
 
         uint256 chainId;
         assembly { chainId := chainid() }
@@ -103,6 +108,22 @@ contract Omnid is ERC721, ChainlinkClient {
     function _beforeTokenTransfer(address _from, address _to, uint256 _tokenId) internal virtual override {
         if (_from != address(0) && _to != address(0)){
             revert('You cannot send your ID to someone else.');
+        }
+    }
+
+    function checkUpkeep(bytes calldata /*checkData*/) external override returns (bool upkeepNeeded, bytes memory /*performData*/) {
+        upkeepNeeded = (block.timestamp - lastTimeStamp) > 60*60*8;
+    }
+
+    function performUpkeep(bytes calldata /* performData */) external override {
+
+        lastTimeStamp = block.timestamp;
+        for (uint256 index = 0; index < upkeepQueue.length; index++) {
+            address ownerAddress = ownerOf(upkeepQueue[index]);
+            INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
+            if(block.timestamp - deets.refreshTime > 60*60*8){
+                refreshScore(upkeepQueue[index]);
+            }
         }
     }
 
@@ -152,11 +173,12 @@ contract Omnid is ERC721, ChainlinkClient {
         hasMinted[_add] = true;
 
         _safeMint(_add, newItemId);
+        upkeepQueue.push(newItemId);
         tokenCounter += 1;
         emit ScoreUpdated(_add, _score);
     }
 
-    function refreshScore(uint256 _tokenId) external {
+    function refreshScore(uint256 _tokenId) public {
         require(_tokenId < tokenCounter, "OMNID: Invalid _tokenId");
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfillRefresh.selector);
         address tokenOwner = ownerOf(_tokenId);
