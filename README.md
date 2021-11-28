@@ -19,6 +19,7 @@
 
 Matic Mumbai config
 - [Chainlink Oracle](https://market.link/jobs/4002bb77-a1c0-4dcc-8480-9130fa7bb26f)
+- [Chainlink Upkeep](https://keepers.chain.link/mumbai/134)
 - [Opensea Collection](https://testnets.opensea.io/collection/omnid-49wswfcoyi)
 - [Omnid Contract](https://mumbai.polygonscan.com/address/0xCe439983CDB28864F1d65C27379D8b3ef92192b4)
 - [NftDescriptor Contract](https://mumbai.polygonscan.com/address/0x1DcB8c596618Bc969732254eaa0893866d1BD3FD)
