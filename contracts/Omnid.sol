@@ -121,7 +121,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
         for (uint256 index = 0; index < upkeepQueue.length; index++) {
             address ownerAddress = ownerOf(upkeepQueue[index]);
             INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
-            if(block.timestamp - deets.refreshTime > 60*60*8){
+            if(block.timestamp - deets.refreshTime > 60*60*8){ // 8hrs
                 refreshScore(upkeepQueue[index]);
             }
         }

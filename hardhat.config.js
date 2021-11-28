@@ -1,8 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require('hardhat-abi-exporter');
-require('hardhat-contract-sizer');
-require("hardhat-gas-reporter");
+// require('hardhat-contract-sizer');
+// require("hardhat-gas-reporter");
 require('dotenv').config()
 
 let mnemonic = process.env.MNEMONIC;
@@ -44,6 +44,12 @@ module.exports = {
     mumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/qqQIm10pMOOsdmlV3p7NYIPt91bB0TL4`,
       chainId: 80001,
+      gas: 20000000, // 20M
+      accounts: mnemonic ? { mnemonic } : undefined
+    },
+    okextestnet: {
+      url: `https://exchaintestrpc.okex.org`,
+      chainId: 65,
       gas: 20000000, // 20M
       accounts: mnemonic ? { mnemonic } : undefined
     }
