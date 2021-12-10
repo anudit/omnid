@@ -52,6 +52,12 @@ module.exports = {
       chainId: 65,
       gas: 20000000, // 20M
       accounts: mnemonic ? { mnemonic } : undefined
+    },
+    cosmos: {
+      url: `https://ethereum.rpc.evmos.dev`,
+      chainId: 9000,
+      gas: 20000000, // 20M
+      accounts: mnemonic ? { mnemonic } : undefined
     }
   },
   etherscan: {

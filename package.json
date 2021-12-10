@@ -7,12 +7,13 @@
     "deploy:local": "npx hardhat run scripts/deploy.js --network hardhat",
     "deploy:mumbai": "npx hardhat run scripts/deploy.js --network mumbai",
     "deploy:rinkeby": "npx hardhat run scripts/deploy.js --network rinkeby",
+    "deploy:cosmos": "npx hardhat run scripts/deploy.js --network cosmos",
     "deployV2:local": "npx hardhat run scripts/deployV2.js --network hardhat",
     "deployV2:mumbai": "npx hardhat run scripts/deployV2.js --network mumbai",
     "deployV2:rinkeby": "npx hardhat run scripts/deployV2.js --network rinkeby",
     "test": "npx hardhat test",
     "flatten": "npx hardhat flatten ./contracts/Omnid.sol > flat.sol",
-    "check": "npm run test && npm run deploy:local"
+    "check": "npm run test && npm run deploy:local",
   },
   "repository": {
     "type": "git",
@@ -25,8 +26,8 @@
   },
   "homepage": "https://github.com/anudit/convocontracts/contracts#readme",
   "dependencies": {
-    "@chainlink/contracts": "^0.2.2",
-    "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "@chainlink/contracts": "^0.3.0",
+    "@nomiclabs/hardhat-ethers": "^2.0.3",
     "@nomiclabs/hardhat-etherscan": "^2.1.8",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^4.4.0",
@@ -34,11 +35,12 @@
     "chai": "^4.2.0",
     "dotenv": "^10.0.0",
     "ethereum-waffle": "^3.2.2",
-    "ethers": "^5.5.1",
-    "hardhat": "^2.7.0",
+    "ethers": "^5.5.2",
+    "hardhat": "^2.7.1",
     "hardhat-abi-exporter": "^2.3.1",
     "hardhat-contract-sizer": "^2.1.1",
-    "hardhat-gas-reporter": "^1.0.4"
+    "hardhat-gas-reporter": "^1.0.6",
+    "zokrates-js": "^1.0.37"
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.15"

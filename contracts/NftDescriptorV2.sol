@@ -183,7 +183,7 @@ contract NftDescriptorV2 {
         }
     }
 
-    function prettyAddress(address x) internal view returns (string memory) {
+    function prettyAddress(address x) internal pure returns (string memory) {
         string memory add = addressToString(x);
         return string(abi.encodePacked(substring(add, 0, 3),"...",substring(add, 37, 40)));
     }
@@ -214,7 +214,7 @@ contract NftDescriptorV2 {
         return buffer;
     }
 
-    function substring(string memory str, uint startIndex, uint endIndex) public view returns (string memory) {
+    function substring(string memory str, uint startIndex, uint endIndex) public pure returns (string memory) {
         bytes memory strBytes = bytes(str);
         bytes memory result = new bytes(endIndex-startIndex);
         for(uint i = startIndex; i < endIndex; i++) {
@@ -271,7 +271,7 @@ contract NftDescriptorV2 {
     }
 
 
-    function addressToColorIntStrings(address _add) view internal returns(string[5] memory) {
+    function addressToColorIntStrings(address _add) pure internal returns(string[5] memory) {
 
         string memory add = addressToString(_add);
         string[5] memory colors;
@@ -298,7 +298,7 @@ contract NftDescriptorV2 {
         return colors;
     }
 
-    function addressToColors(address _add) view public returns (Color[5] memory colors){
+    function addressToColors(address _add) pure public returns (Color[5] memory colors){
         string[5] memory colorInts = addressToColorIntStrings(_add);
         for (uint i = 0; i < 5; i++){
             string memory color = colorInts[i];
@@ -317,7 +317,7 @@ contract NftDescriptorV2 {
         }
     }
 
-    function getGenerativeStyles(address _userAddress) public view returns(string memory){
+    function getGenerativeStyles(address _userAddress) public pure returns(string memory){
 
         Color[5] memory colors = addressToColors(_userAddress);
 
