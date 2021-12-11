@@ -1,5 +1,5 @@
 {
-  "name": "convocontracts",
+  "name": "omnid",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -13,18 +13,18 @@
     "deployV2:rinkeby": "npx hardhat run scripts/deployV2.js --network rinkeby",
     "test": "npx hardhat test",
     "flatten": "npx hardhat flatten ./contracts/Omnid.sol > flat.sol",
-    "check": "npm run test && npm run deploy:local",
+    "check": "npm run test && npm run deploy:local"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anudit/convocontracts/contracts.git"
+    "url": "git+https://github.com/anudit/omnid/contracts.git"
   },
   "author": "Anudit Nagar",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/anudit/convocontracts/contracts/issues"
+    "url": "https://github.com/anudit/omnid/contracts/issues"
   },
-  "homepage": "https://github.com/anudit/convocontracts/contracts#readme",
+  "homepage": "https://github.com/anudit/omnid/contracts#readme",
   "dependencies": {
     "@chainlink/contracts": "^0.3.0",
     "@nomiclabs/hardhat-ethers": "^2.0.3",
