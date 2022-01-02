@@ -1,8 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require('hardhat-abi-exporter');
-// require('hardhat-contract-sizer');
-// require("hardhat-gas-reporter");
+require('hardhat-contract-sizer');
+require("hardhat-gas-reporter");
 require('dotenv').config()
 
 let mnemonic = process.env.MNEMONIC;
@@ -20,7 +20,7 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.10",
+        version: "0.8.11",
         settings: {
           optimizer: {
             runs: 999999,

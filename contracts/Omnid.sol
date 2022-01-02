@@ -9,11 +9,12 @@
 ===============================*/
 
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity >=0.8.10 <0.9.0;
+pragma solidity >=0.8.11 <0.9.0;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@rari-capital/solmate/src/tokens/ERC721.sol";
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
 
@@ -95,21 +96,17 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
         base = _base;
     }
 
-    function totalSupply() external view returns (uint256) {
-        return tokenCounter;
-    }
-
     function tokenURI(uint256 _tokenId) public view virtual override returns (string memory uri) {
-        address ownerAddress = ownerOf(_tokenId);
+        address ownerAddress = ownerOf[_tokenId];
         INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
         uri = descriptor.constructTokenURI(_tokenId, ownerAddress, deets);
     }
 
-    function _beforeTokenTransfer(address _from, address _to, uint256) internal virtual override {
-        if (_from != address(0) && _to != address(0)){
-            revert('You cannot send your ID to someone else.');
-        }
-    }
+    // function _beforeTokenTransfer(address _from, address _to, uint256) internal virtual override {
+    //     if (_from != address(0) && _to != address(0)){
+    //         revert('You cannot send your ID to someone else.');
+    //     }
+    // }
 
     function checkUpkeep(bytes calldata /*checkData*/) external view override returns (bool upkeepNeeded, bytes memory /*performData*/) {
         upkeepNeeded = (block.timestamp - lastTimeStamp) > 60*60*8;
@@ -119,7 +116,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
 
         lastTimeStamp = block.timestamp;
         for (uint256 index = 0; index < upkeepQueue.length; index++) {
-            address ownerAddress = ownerOf(upkeepQueue[index]);
+            address ownerAddress = ownerOf[upkeepQueue[index]];
             INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
             if(block.timestamp - deets.refreshTime > 60*60*8){ // 8hrs
                 refreshScore(upkeepQueue[index]);
@@ -181,9 +178,9 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
     function refreshScore(uint256 _tokenId) public {
         require(_tokenId < tokenCounter, "OMNID: Invalid _tokenId");
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfillRefresh.selector);
-        address tokenOwner = ownerOf(_tokenId);
+        address tokenOwner = ownerOf[_tokenId];
 
-        string memory reqApiAddress = string(abi.encodePacked(base, ownerOf(_tokenId)));
+        string memory reqApiAddress = string(abi.encodePacked(base, ownerOf[_tokenId]));
 
         request.add("get", reqApiAddress);
 
@@ -209,7 +206,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
     }
 
     function updateSkin(uint256 _tokenId, uint256 _newSkinId) public {
-        address tokenOwner = ownerOf(_tokenId);
+        address tokenOwner = ownerOf[_tokenId];
         require(tokenOwner == msg.sender, "Omnid:Only owner can update Skin.");
         require(descriptor.isValidSkinId(_newSkinId) == true, "OMNID: Invalid Skin");
 
@@ -221,7 +218,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
     }
 
     function updateEtching(uint256 _tokenId, bytes32 _newEtching) public {
-        address tokenOwner = ownerOf(_tokenId);
+        address tokenOwner = ownerOf[_tokenId];
         require(tokenOwner == msg.sender, "Omnid:Only owner can update Etching.");
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
