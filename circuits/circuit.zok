@@ -1,0 +1,2 @@
+def main(private field score, field rangeLow, field rangeHigh) -> bool:
+    return score >= rangeLow && score <= rangeHigh

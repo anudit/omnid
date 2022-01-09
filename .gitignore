@@ -5,3 +5,6 @@ node_modules
 skins.txt
 notes.txt
 bin
+stdlib
+zokrates.exe
+circuits/state.json

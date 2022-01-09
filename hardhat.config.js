@@ -38,34 +38,31 @@ module.exports = {
   },
   networks: {
     hardhat: {},
+    ropsten: infuraNetwork("ropsten", 3, 6283185),
     rinkeby: infuraNetwork("rinkeby", 4, 6283185),
-    kovan: infuraNetwork("kovan", 42, 6283185),
     goerli: infuraNetwork("goerli", 5, 6283185),
-    mumbai: {
+    kovan: infuraNetwork("kovan", 42, 6283185),
+    polygonMumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/qqQIm10pMOOsdmlV3p7NYIPt91bB0TL4`,
       chainId: 80001,
-      gas: 20000000, // 20M
-      accounts: mnemonic ? { mnemonic } : undefined
-    },
-    okextestnet: {
-      url: `https://exchaintestrpc.okex.org`,
-      chainId: 65,
-      gas: 20000000, // 20M
-      accounts: mnemonic ? { mnemonic } : undefined
-    },
-    cosmos: {
-      url: `https://ethereum.rpc.evmos.dev`,
-      chainId: 9000,
       gas: 20000000, // 20M
       accounts: mnemonic ? { mnemonic } : undefined
     }
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY ? process.env.ETHERSCAN_API_KEY : undefined
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_API_KEY ? process.env.ETHERSCAN_API_KEY : undefined,
+      ropsten: process.env.ETHERSCAN_API_KEY ? process.env.ETHERSCAN_API_KEY : undefined,
+      rinkeby: process.env.ETHERSCAN_API_KEY ? process.env.ETHERSCAN_API_KEY : undefined,
+      goerli: process.env.ETHERSCAN_API_KEY ? process.env.ETHERSCAN_API_KEY : undefined,
+      kovan: process.env.ETHERSCAN_API_KEY ? process.env.ETHERSCAN_API_KEY : undefined,
+      polygon: process.env.POLYGONSCAN_API_KEY ? process.env.POLYGONSCAN_API_KEY : undefined,
+      polygonMumbai: process.env.POLYGONSCAN_API_KEY ? process.env.POLYGONSCAN_API_KEY : undefined,
+    }
   },
   gasReporter: {
     currency: 'USD',
-    gasPrice: 1,
+    gasPrice: 1, // xD
     coinmarketcap: process.env.CMC_APIKEY
   },
   abiExporter: {
