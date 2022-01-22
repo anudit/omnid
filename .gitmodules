@@ -4,3 +4,6 @@
 [submodule "testfoundry/lib/foundry-template"]
 	path = testfoundry/lib/foundry-template
 	url = https://github.com/ZeframLou/foundry-template
+[submodule "testf/lib/ds-test"]
+	path = testf/lib/ds-test
+	url = https://github.com/dapphub/ds-test
