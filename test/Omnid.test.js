@@ -49,7 +49,6 @@ describe("Omnid", () => {
 
         it("Should get Random Card design", async function () {
 
-
             let data = await nftDescriptorV2.constructTokenURI(0, "0x70997970C51812dc3A010C7d01b50e0d17dc79C8", [1000, 1638013711, 0, ethers.utils.formatBytes32String('Ayoooo')]);
             expect(true).to.equal(true);
 

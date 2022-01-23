@@ -1,0 +1,70 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "constructTokenURI",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        },
+        {
+          "internalType": "struct INftDescriptor.IdDetails",
+          "name": "_deets",
+          "type": "tuple",
+          "components": [
+            {
+              "type": "uint256"
+            },
+            {
+              "type": "uint256"
+            },
+            {
+              "type": "uint256"
+            },
+            {
+              "type": "bytes32"
+            }
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "constant": null,
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "isValidSkinId",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_skinId",
+          "type": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "constant": null,
+      "stateMutability": "view"
+    }
+  ],
+  "bin": "0x",
+  "bin-runtime": "0x"
+}

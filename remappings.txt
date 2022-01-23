@@ -1,0 +1,8 @@
+base64-sol/=node_modules/base64-sol/
+@openzeppelin/=node_modules/@openzeppelin/
+@rari-capital/=node_modules/@rari-capital/
+eth-gas-reporter/=node_modules/eth-gas-reporter/
+hardhat/=node_modules/hardhat/
+@chainlink/=node_modules/@chainlink/
+@ensdomains/=node_modules/@ensdomains/
+ds-test/=lib/ds-test/src/

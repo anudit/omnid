@@ -1,0 +1,4 @@
+testAddSkin() (gas: 547031)
+testNftMint() (gas: 122798)
+testInvalidProofVerify() (gas: 240753)
+testValidProofVerify() (gas: 240794)

@@ -1,0 +1,42 @@
+{
+  "abi": [
+    {
+      "type": "event",
+      "name": "ChainlinkCancelled",
+      "inputs": [
+        {
+          "name": "id",
+          "type": "bytes32",
+          "indexed": true
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "ChainlinkFulfilled",
+      "inputs": [
+        {
+          "name": "id",
+          "type": "bytes32",
+          "indexed": true
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "ChainlinkRequested",
+      "inputs": [
+        {
+          "name": "id",
+          "type": "bytes32",
+          "indexed": true
+        }
+      ],
+      "anonymous": false
+    }
+  ],
+  "bin": "0x",
+  "bin-runtime": "0x"
+}
