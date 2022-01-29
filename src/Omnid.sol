@@ -15,7 +15,7 @@ import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
 import "@rari-capital/solmate/src/tokens/ERC721.sol";
 import '@openzeppelin/contracts/utils/Strings.sol';
-import 'base64-sol/base64.sol';
+import '@opengsn/contracts/src/BaseRelayRecipient.sol';
 
 interface INftDescriptor {
     struct IdDetails {
@@ -28,7 +28,7 @@ interface INftDescriptor {
     function isValidSkinId(uint256 _skinId) external view returns(bool);
 }
 
-contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
+contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayRecipient {
 
     using Strings for uint256;
 
@@ -51,7 +51,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
     uint256 public tokenCounter;
     address public admin;
     INftDescriptor public descriptor;
-    string base;
+    string public base;
 
     mapping(address => INftDescriptor.IdDetails) public addressToIdDetails;
     mapping(address => bool) public hasMinted;
@@ -74,11 +74,13 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
             setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
             jobId = "2bb15c3f9cfc4336b95012872ff05092";
             fee = 0.01 * (10 ** 18); //  LINK
+            _setTrustedForwarder(0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b);
         }
+
     }
 
     modifier onlyAdmin() {
-        require(msg.sender == admin, "Omnid:onlyAdmin");
+        require(_msgSender() == admin, "Omnid:onlyAdmin");
         _;
     }
 
@@ -206,7 +208,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
 
     function updateSkin(uint256 _tokenId, uint256 _newSkinId) public {
         address tokenOwner = ownerOf[_tokenId];
-        require(tokenOwner == msg.sender, "Omnid:Only owner can update Skin.");
+        require(tokenOwner == _msgSender(), "Omnid:Only owner can update Skin.");
         require(descriptor.isValidSkinId(_newSkinId) == true, "OMNID: Invalid Skin");
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
@@ -218,7 +220,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
 
     function updateEtching(uint256 _tokenId, bytes32 _newEtching) public {
         address tokenOwner = ownerOf[_tokenId];
-        require(tokenOwner == msg.sender, "Omnid:Only owner can update Etching.");
+        require(tokenOwner == _msgSender(), "Omnid:Only owner can update Etching.");
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
         newDeets.etching = _newEtching;
@@ -239,6 +241,13 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface {
             value >>= 4;
         }
         return string(buffer);
+    }
+    function versionRecipient() external pure override returns (string memory) {
+        return "1";
+    }
+
+    function setTrustedForwarder(address _trustedForwarder) external onlyAdmin {
+        _setTrustedForwarder(_trustedForwarder);
     }
 
     // Only for Testing.

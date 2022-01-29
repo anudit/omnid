@@ -6,3 +6,4 @@ hardhat/=node_modules/hardhat/
 @chainlink/=node_modules/@chainlink/
 @ensdomains/=node_modules/@ensdomains/
 ds-test/=lib/ds-test/src/
+@opengsn/=node_modules/@opengsn/
