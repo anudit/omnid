@@ -103,12 +103,6 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
         uri = descriptor.constructTokenURI(_tokenId, ownerAddress, deets);
     }
 
-    // function _beforeTokenTransfer(address _from, address _to, uint256) internal virtual override {
-    //     if (_from != address(0) && _to != address(0)){
-    //         revert('You cannot send your ID to someone else.');
-    //     }
-    // }
-
     function checkUpkeep(bytes calldata /*checkData*/) external view override returns (bool upkeepNeeded, bytes memory /*performData*/) {
         upkeepNeeded = (block.timestamp - lastTimeStamp) > 60*60*8;
     }
