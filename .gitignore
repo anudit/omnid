@@ -8,3 +8,5 @@ bin
 stdlib
 zokrates.exe
 circuits/state.json
+cache/
+out/
