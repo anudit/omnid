@@ -1,6 +1,6 @@
 # Omnid
 
-Omnid aggregates multiple on/off-chain sources of reputation into an overall social graph where each source counts towards some points in building the overall TrustScore for any Ethereum Address. This score is continuously evolving. As more platforms get integrated, the weights and the score will update too.
+Omnid (Omniscient-Id) aggregates multiple on/off-chain sources of reputation into an overall social graph where each source counts towards some points in building the overall TrustScore for any Ethereum Address. This score is continuously evolving. As more platforms get integrated, the weights and the score will update too.
 
 [View Docs](https://docs.theconvo.space/docs/Convo-API/omnid)
 
