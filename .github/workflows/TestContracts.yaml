@@ -19,5 +19,16 @@ jobs:
         with:
           version: nightly
 
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install
+
       - name: Run tests
         run: forge test -vvv --gas-report
