@@ -7,3 +7,6 @@
 [submodule "testf/lib/ds-test"]
 	path = testf/lib/ds-test
 	url = https://github.com/dapphub/ds-test
+[submodule "lib/base64"]
+	path = lib/base64
+	url = https://github.com/Brechtpd/base64
