@@ -38,7 +38,7 @@ async function main() {
     }, null, 2));
 
 
-    let nftcount = 10;
+    let nftcount = 5;
 
     for (let index = 0; index < nftcount; index++) {
 

@@ -254,7 +254,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
 
         _safeMint(_for, newItemId);
         tokenCounter += 1;
-
+        emit ScoreUpdated(_for, _score);
     }
 
 }
