@@ -12,7 +12,7 @@
 pragma solidity >=0.8.10 <0.9.0;
 
 import '@openzeppelin/contracts/utils/Strings.sol';
-import 'base64/base64.sol';
+import 'base64-sol/base64.sol';
 
 contract NftDescriptorV2 {
 

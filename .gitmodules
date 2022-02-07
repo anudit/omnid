@@ -1,12 +1,3 @@
-[submodule "testfoundry/lib/foundry-template"]
-	path = testfoundry/lib/foundry-template
-	url = https://github.com/ZeframLou/foundry-template
-[submodule "lib/base64"]
-	path = lib/base64
-	url = https://github.com/Brechtpd/base64
-[submodule "lib/solmate"]
-	path = lib/solmate
-	url = https://github.com/rari-capital/solmate
 [submodule "lib/ds-test"]
 	path = lib/ds-test
 	url = https://github.com/dapphub/ds-test
