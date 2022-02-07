@@ -11,11 +11,11 @@
 // SPDX-License-Identifier: AGPL-3.0
 pragma solidity >=0.8.11 <0.9.0;
 
-import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
-import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
-import '@rari-capital/solmate/src/tokens/ERC721.sol';
-import '@openzeppelin/contracts/utils/Strings.sol';
-import '@opengsn/contracts/src/BaseRelayRecipient.sol';
+import "../node_modules/@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import "../node_modules/@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
+import '../node_modules/@rari-capital/solmate/src/tokens/ERC721.sol';
+import '../node_modules/@openzeppelin/contracts/utils/Strings.sol';
+import '../node_modules/@opengsn/contracts/src/BaseRelayRecipient.sol';
 
 interface INftDescriptor {
     struct IdDetails {
