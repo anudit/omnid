@@ -32,3 +32,7 @@ jobs:
 
       - name: Run tests
         run: forge test --contracts contracts --gas-report
+
+      - name: Mock Deploy
+        run: yarn deployV2:local
+

@@ -11,3 +11,4 @@ circuits/state.json
 cache/
 out/
 .mnemonic
+hh-cache

@@ -7,6 +7,17 @@ require('dotenv').config()
 
 let mnemonic = process.env.MNEMONIC;
 
+// ignore test files for foundry compatiblity
+const {subtask} = require("hardhat/config");
+const {TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS} = require("hardhat/builtin-tasks/task-names")
+
+subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS)
+  .setAction(async (_, __, runSuper) => {
+    const paths = await runSuper();
+
+    return paths.filter(p => !p.endsWith(".t.sol"));
+  });
+
 const infuraNetwork = (network, chainId, gas) => {
   return {
     url: `https://${network}.infura.io/v3/${process.env.PROJECT_ID}`,
@@ -20,7 +31,7 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.11",
+        version: "0.8.12",
         settings: {
           optimizer: {
             runs: 999999,
@@ -74,6 +85,7 @@ module.exports = {
     alphaSort: true,
     runOnCompile: true,
     disambiguatePaths: false,
-  }
+  },
+  paths: { cache: 'hh-cache' }
 };
 

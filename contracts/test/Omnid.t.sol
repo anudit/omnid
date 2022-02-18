@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity 0.8.11;
+pragma solidity 0.8.12;
 
 import '../NftDescriptorV2.sol';
 import '../Omnid.sol';

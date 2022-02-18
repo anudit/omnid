@@ -3,7 +3,7 @@ const { ethers } = require("hardhat");
 
 async function main() {
 
-    const [owner, addr1, addr2, addr3, addr4, addr5, ...addrs] = await ethers.getSigners();
+    const [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
 
     console.log("Deploying contracts with the account:", owner.address);
     console.log(`Owner [${owner.address}] Balance:`, ethers.utils.formatEther(await owner.getBalance()).toString());
@@ -74,8 +74,6 @@ async function main() {
 function tokenUriToJson(tokenURI){
     return JSON.parse(Buffer.from(tokenURI.split(',')[1], 'base64').toString('utf8'));
 }
-
-
 
 main()
     .then(() => process.exit(0))
