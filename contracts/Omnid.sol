@@ -43,7 +43,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     mapping(bytes32 => bool) public requestIdFulfilled;
     event RequestFulfilled(bytes32 indexed requestId, uint256 indexed score);
 
-    uint public lastTimeStamp;
+    uint256 public lastTimeStamp;
     uint256[] upkeepQueue;
 
     // OMNID
