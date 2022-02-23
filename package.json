@@ -11,7 +11,7 @@
     "deployV2:local": "npx hardhat run scripts/deployV2.js --network hardhat",
     "deployV2:mumbai": "npx hardhat run scripts/deployV2.js --network polygonMumbai",
     "deployV2:rinkeby": "npx hardhat run scripts/deployV2.js --network rinkeby",
-    "test": "forge test --contracts contracts",
+    "test": "forge test -vvvv --contracts contracts",
     "flatten": "npx hardhat flatten ./contracts/Omnid.sol > flat.sol",
     "zk:compile": "zokrates compile -i ./circuits/circuit.zok -o ./circuits/out",
     "zk:setup": "node ./circuits/setup.js",

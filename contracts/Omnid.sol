@@ -129,7 +129,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     function createId(address _for, bytes32 _etching, uint256 _skinIndex) external {
-        require(hasMinted[_for] == true, "OMNID: ID already issued");
+        require(hasMinted[_for] == false, "OMNID: ID already issued");
         require(descriptor.isValidSkinId(_skinIndex) == true, "OMNID: Invalid Skin");
 
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
@@ -163,10 +163,10 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
         addressToIdDetails[_add] = newDeets;
 
         hasMinted[_add] = true;
+        tokenCounter += 1;
+        upkeepQueue.push(newItemId);
 
         _safeMint(_add, newItemId);
-        upkeepQueue.push(newItemId);
-        tokenCounter += 1;
         emit ScoreUpdated(_add, _score);
     }
 
@@ -203,7 +203,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     function updateSkin(uint256 _tokenId, uint256 _newSkinId) public {
         address tokenOwner = ownerOf[_tokenId];
         require(tokenOwner == _msgSender(), "Omnid:Only owner can update Skin.");
-        require(descriptor.isValidSkinId(_newSkinId) == true, "OMNID: Invalid Skin");
+        require(descriptor.isValidSkinId(_newSkinId) == true, "Omnid:Invalid Skin");
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
         newDeets.skinIndex = _newSkinId;
@@ -246,7 +246,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
 
     // Only for Testing.
     function createIdDev(address _for, uint256 _score, bytes32 _etching, uint256 _skinIndex) external onlyAdmin {
-
+        require(hasMinted[_for] == false, "OMNID: ID already issued");
         uint256 newItemId = tokenCounter;
 
         INftDescriptor.IdDetails memory newDeets = INftDescriptor.IdDetails( _score, block.timestamp, _skinIndex, _etching );
@@ -254,6 +254,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
 
         _safeMint(_for, newItemId);
         tokenCounter += 1;
+        hasMinted[_for] = true;
         emit ScoreUpdated(_for, _score);
     }
 
