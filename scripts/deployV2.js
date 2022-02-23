@@ -22,16 +22,17 @@ async function main() {
     const Omnid = await ethers.getContractFactory("Omnid");
     const omnid = await Omnid.deploy(nftDescriptorV2.address);
 
-    if (hre.network.config.chainId != 31337){
-        await hre.run("verify:verify", {
-            address: nftDescriptorV2.address
-        });
+    // if (hre.network.config.chainId != 31337){
+    //     console.log('Verifying Contracts');
+    //     await hre.run("verify:verify", {
+    //         address: nftDescriptorV2.address
+    //     });
 
-        await hre.run("verify:verify", {
-            address: omnid.address,
-            constructorArguments: [nftDescriptorV2.address],
-        });
-    }
+    //     await hre.run("verify:verify", {
+    //         address: omnid.address,
+    //         constructorArguments: [nftDescriptorV2.address],
+    //     });
+    // }
 
     console.log(JSON.stringify({
         [hre.network.config.chainId]: {
@@ -52,7 +53,7 @@ async function main() {
             ethers.utils.formatBytes32String("WAGMI"),
             0
         );
-        console.log('Minted Skin#0', index)
+        console.log('Minted Skin#0', `https://testnets.opensea.io/assets/matic/${omnid.address}/${index}`)
 
     }
 
@@ -65,7 +66,7 @@ async function main() {
             ethers.utils.formatBytes32String("AYEE"),
             1
         );
-        console.log('Minted Skin#1', index2)
+        console.log('Minted Skin#1', `https://testnets.opensea.io/assets/matic/${omnid.address}/${nftcount+index2}`)
 
     }
 

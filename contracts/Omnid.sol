@@ -60,6 +60,13 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     event SkinUpdated(address indexed who, uint256 indexed tokenId, uint256 skinId);
     event EtchingUpdated(address indexed who, uint256 indexed tokenId, bytes32 etching);
 
+    // Custom Errors
+
+    error OmnidOnlyAdmin();
+    error OmnidOnlyNftOwner();
+    error OmnidAlreadyIssued();
+    error ChainlinkRequestFulfilled();
+
     constructor(address _descriptorAddress) ERC721("Omnid", "OMNID") {
         tokenCounter = 0;
         admin = msg.sender;
@@ -80,7 +87,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     modifier onlyAdmin() {
-        require(_msgSender() == admin, "Omnid:onlyAdmin");
+        if (_msgSender() != admin) revert OmnidOnlyAdmin();
         _;
     }
 
@@ -129,7 +136,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     function createId(address _for, bytes32 _etching, uint256 _skinIndex) external {
-        require(hasMinted[_for] == false, "OMNID: ID already issued");
+        if(hasMinted[_for] == true) revert OmnidAlreadyIssued();
         require(descriptor.isValidSkinId(_skinIndex) == true, "OMNID: Invalid Skin");
 
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
@@ -151,7 +158,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     function fulfill(bytes32 _requestId, uint256 _score) public recordChainlinkFulfillment(_requestId) {
-        require(requestIdFulfilled[_requestId] == false, "Omnid:Request already Fulfilled");
+        if(requestIdFulfilled[_requestId] == true) revert ChainlinkRequestFulfilled();
         emit RequestFulfilled(_requestId, _score);
 
         uint256 newItemId = tokenCounter;
@@ -188,7 +195,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     function fulfillRefresh(bytes32 _requestId, uint256 _score) public recordChainlinkFulfillment(_requestId) {
-        require(requestIdFulfilled[_requestId] == false, "Omnid:Request already Fulfilled");
+        if(requestIdFulfilled[_requestId] == true) revert ChainlinkRequestFulfilled();
         emit RequestFulfilled(_requestId, _score);
         address add = requestIdToAddress[_requestId];
 
@@ -202,7 +209,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
 
     function updateSkin(uint256 _tokenId, uint256 _newSkinId) public {
         address tokenOwner = ownerOf[_tokenId];
-        require(tokenOwner == _msgSender(), "Omnid:Only owner can update Skin.");
+        if(tokenOwner != _msgSender()) revert OmnidOnlyNftOwner();
         require(descriptor.isValidSkinId(_newSkinId) == true, "Omnid:Invalid Skin");
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
@@ -214,7 +221,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
 
     function updateEtching(uint256 _tokenId, bytes32 _newEtching) public {
         address tokenOwner = ownerOf[_tokenId];
-        require(tokenOwner == _msgSender(), "Omnid:Only owner can update Etching.");
+        if(tokenOwner != _msgSender()) revert OmnidOnlyNftOwner();
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];
         newDeets.etching = _newEtching;
@@ -246,15 +253,15 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
 
     // Only for Testing.
     function createIdDev(address _for, uint256 _score, bytes32 _etching, uint256 _skinIndex) external onlyAdmin {
-        require(hasMinted[_for] == false, "OMNID: ID already issued");
+        if(hasMinted[_for] == true) revert OmnidAlreadyIssued();
         uint256 newItemId = tokenCounter;
 
         INftDescriptor.IdDetails memory newDeets = INftDescriptor.IdDetails( _score, block.timestamp, _skinIndex, _etching );
         addressToIdDetails[_for] = newDeets;
-
-        _safeMint(_for, newItemId);
         tokenCounter += 1;
         hasMinted[_for] = true;
+
+        _safeMint(_for, newItemId);
         emit ScoreUpdated(_for, _score);
     }
 

@@ -53,7 +53,7 @@ contract OmnidTest is DSTest {
             0
         );
 
-        vm.expectRevert(bytes("OMNID: ID already issued"));
+        vm.expectRevert(abi.encodeWithSelector(Omnid.OmnidAlreadyIssued.selector));
         vm.prank(owner);
         omnid.createIdDev(
             owner,

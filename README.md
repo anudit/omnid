@@ -9,8 +9,8 @@ Omnid (Omniscient-Id) aggregates multiple on/off-chain sources of reputation int
 ```json
 {
   "80001": {
-    "nftDescriptorV2": "0xCC1ca17B4315Bcd41D4A439f8C657111dE4cBf19",
-    "Omnid": "0xF66D5443b4e881c41A16eCd9Ba72C715A413929b",
+    "nftDescriptorV2": "0xe00E3B34C7FF1561725b56a6CCB00F47F1A313a4",
+    "Omnid": "0x835796B65ECD11cD55Ff1C4940348Cb251f6c401",
     "Verifier": "0x1cb460256bcece9aa216e80ccff5c3b98f8c9263"
   }
 }
@@ -18,9 +18,9 @@ Omnid (Omniscient-Id) aggregates multiple on/off-chain sources of reputation int
 
 Matic Mumbai config
 - [Chainlink Oracle](https://market.link/jobs/4002bb77-a1c0-4dcc-8480-9130fa7bb26f)
-- [Opensea Collection](https://testnets.opensea.io/collection/omnid-6ubai8ssfu)
-- [Omnid Contract](https://mumbai.polygonscan.com/address/0xF66D5443b4e881c41A16eCd9Ba72C715A413929b)
-- [NftDescriptor Contract](https://mumbai.polygonscan.com/address/0xCC1ca17B4315Bcd41D4A439f8C657111dE4cBf19)
+- [Opensea Collection](https://testnets.opensea.io/collection/omnid-bw0qvui1hl)
+- [Omnid Contract](https://mumbai.polygonscan.com/address/0x835796B65ECD11cD55Ff1C4940348Cb251f6c401)
+- [NftDescriptor Contract](https://mumbai.polygonscan.com/address/0xe00E3B34C7FF1561725b56a6CCB00F47F1A313a4)
 - [Verifier Contract](https://mumbai.polygonscan.com/address/0x1cb460256bcece9aa216e80ccff5c3b98f8c9263)
 
 
