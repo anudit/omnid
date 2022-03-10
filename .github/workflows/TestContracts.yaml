@@ -33,6 +33,16 @@ jobs:
       - name: Run tests
         run: forge test -vvvv --contracts contracts --gas-report
 
+      - name: Run Slither
+        uses: crytic/slither-action@v0.1.0
+        continue-on-error: true
+        id: slither
+        with:
+          ignore-compile: true
+          target: 'contracts/'
+          solc-version: "0.8.12"
+          node-version: 16
+
       - name: Mock Deploy
         run: yarn deployV2:local
 
