@@ -37,6 +37,8 @@ jobs:
         uses: crytic/slither-action@v0.1.0
         continue-on-error: true
         id: slither
+        env:
+          SOLC_VERSION: "0.8.12"
         with:
           ignore-compile: true
           target: 'contracts/'
