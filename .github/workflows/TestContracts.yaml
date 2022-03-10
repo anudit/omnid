@@ -44,6 +44,15 @@ jobs:
           target: 'contracts/'
           solc-version: "0.8.12"
           node-version: 16
+          sarif: results.sarif
+
+      # - name: Upload SARIF file
+      #   uses: github/codeql-action/upload-sarif@v1
+      #   with:
+      #     sarif_file: ${{ steps.slither.outputs.sarif }}
+
+      - name: Run Slither
+        run: slither ./contracts --config slither.config.json
 
       - name: Mock Deploy
         run: yarn deployV2:local
