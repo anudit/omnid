@@ -13,7 +13,7 @@ pragma solidity >=0.8.12 <0.9.0;
 
 import "../node_modules/@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "../node_modules/@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
-import 'solmate/tokens/ERC721.sol';
+import '../node_modules/@rari-capital/solmate/src/tokens/ERC721.sol';
 import '../node_modules/@openzeppelin/contracts/utils/Strings.sol';
 import '../node_modules/@opengsn/contracts/src/BaseRelayRecipient.sol';
 
