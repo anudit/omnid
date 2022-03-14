@@ -9,7 +9,7 @@
 ===============================*/
 
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity >=0.8.10 <0.9.0;
+pragma solidity >=0.8.12 <0.9.0;
 
 import '../node_modules/@openzeppelin/contracts/utils/Strings.sol';
 import '../node_modules/base64-sol/base64.sol';
