@@ -1,7 +1,7 @@
 ds-test/=lib/ds-test/src/
 forge-std/=lib/forge-std/src/
 base64-sol/=node_modules/base64-sol/
-@rari-capital/=node_modules/@rari-capital/
+solmate/=lib/solmate/src/
 @openzeppelin/=node_modules/@openzeppelin/
 @chainlink/=node_modules/@chainlink/
 @opengsn/=node_modules/@opengsn/
