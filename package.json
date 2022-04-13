@@ -45,7 +45,7 @@
     "hardhat-abi-exporter": "^2.8.0",
     "hardhat-contract-sizer": "^2.5.0",
     "hardhat-gas-reporter": "^1.0.8",
-    "zokrates-js": "1.0.39"
+    "zokrates-js": "1.0.41"
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.15"
