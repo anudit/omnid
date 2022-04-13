@@ -43,7 +43,7 @@ jobs:
 
       # - name: Install Solidity
       #   env:
-      #     SOLC_VERSION: 0.8.12
+      #     SOLC_VERSION: 0.8.13
       #   run: |
       #     pip3 install solc-select
       #     solc-select install $SOLC_VERSION

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity 0.8.12;
+pragma solidity 0.8.13;
 
 import '../NftDescriptorV2.sol';
 import '../Omnid.sol';
@@ -30,7 +30,6 @@ contract OmnidTest is DSTest {
 
     function testNftMint() public {
 
-        vm.prank(owner);
         omnid.createIdDev(
             owner,
             50,
@@ -45,7 +44,7 @@ contract OmnidTest is DSTest {
     }
 
     function testNftDoubleMintFail() public {
-        vm.prank(owner);
+
         omnid.createIdDev(
             owner,
             50,
@@ -54,7 +53,7 @@ contract OmnidTest is DSTest {
         );
 
         vm.expectRevert(abi.encodeWithSelector(Omnid.OmnidAlreadyIssued.selector));
-        vm.prank(owner);
+
         omnid.createIdDev(
             owner,
             40,
