@@ -24,7 +24,7 @@ jobs:
           node-version: 16
 
       - name: Cache pnpm modules
-        uses: actions/cache@3.0.2
+        uses: actions/cache@v3.0.2
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
