@@ -12,6 +12,14 @@ Omnid (Omniscient-Id) aggregates multiple on/off-chain sources of reputation int
     "nftDescriptorV2": "0xe00E3B34C7FF1561725b56a6CCB00F47F1A313a4",
     "Omnid": "0x835796B65ECD11cD55Ff1C4940348Cb251f6c401",
     "Verifier": "0x1cb460256bcece9aa216e80ccff5c3b98f8c9263"
+  },
+  "868455272153094": {
+    "nftDescriptorV2": "0xe456Cd9EF6b40B8A7aa64bA79BDEB5aEF0A661dB",
+    "Omnid": "0x240e9dA7CA9855fe5c0901fBa2d03692782e2E1a"
+  },
+  "42261": {
+    "nftDescriptorV2": "0x65CAEC30a86135c1dce58f8d4b469E67F87692c2",
+    "Omnid": "0x51b9E97ae9758a45B08c51C1bd4EEEcE3A64489a"
   }
 }
 ```

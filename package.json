@@ -11,6 +11,7 @@
     "deployV2:local": "npx hardhat run scripts/deployV2.js --network hardhat",
     "deployV2:mumbai": "npx hardhat run scripts/deployV2.js --network polygonMumbai",
     "deployV2:rinkeby": "npx hardhat run scripts/deployV2.js --network rinkeby",
+    "deployV2:emeraldOasis": "npx hardhat run scripts/deployV2.js --network emeraldOasis",
     "test": "forge test -vvvv --contracts contracts",
     "flatten": "npx hardhat flatten ./contracts/Omnid.sol > flat.sol",
     "zk:compile": "zokrates compile -i ./circuits/circuit.zok -o ./circuits/out",
@@ -34,18 +35,18 @@
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@opengsn/contracts": "^2.2.6",
-    "@openzeppelin/contracts": "^4.5.0",
+    "@openzeppelin/contracts": "^4.6.0",
     "@rari-capital/solmate": "^6.2.0",
     "base64-sol": "^1.1.0",
     "chai": "^4.3.6",
     "dotenv": "^15.0.0",
     "ethereum-waffle": "^3.2.2",
-    "ethers": "^5.6.0",
+    "ethers": "^5.6.4",
     "hardhat": "^2.9.1",
-    "hardhat-abi-exporter": "^2.8.0",
+    "hardhat-abi-exporter": "^2.9.0",
     "hardhat-contract-sizer": "^2.5.0",
     "hardhat-gas-reporter": "^1.0.8",
-    "zokrates-js": "1.0.41"
+    "zokrates-js": "1.0.43"
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.15"

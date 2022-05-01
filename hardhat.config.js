@@ -58,7 +58,19 @@ module.exports = {
       chainId: 80001,
       gas: 20000000, // 20M
       accounts: mnemonic ? { mnemonic } : undefined
-    }
+    },
+    godwoken: {
+      url: `https://godwoken-testnet-web3-v1-rpc.ckbapp.dev`,
+      chainId: 868455272153094,
+      gas: 20000000, // 20M
+      accounts: mnemonic ? { mnemonic } : undefined
+    },
+    emeraldOasis: {
+      url: `https://testnet.emerald.oasis.dev`,
+      chainId: 42261,
+      gas: 20000000, // 20M
+      accounts: mnemonic ? { mnemonic } : undefined
+    },
   },
   etherscan: {
     apiKey: {

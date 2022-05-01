@@ -9,7 +9,7 @@ async function main() {
     console.log("Deploying contracts with the account:", owner.address);
     console.log(`Owner [${owner.address}] Balance:`, ethers.utils.formatEther(await owner.getBalance()).toString());
     console.log(`Addr1 [${addr1.address}] Balance:`, ethers.utils.formatEther(await addr1.getBalance()).toString());
-    console.log(`Addr2 [${addr2.address}] Balance:`, ethers.utils.formatEther(await addr2.getBalance()).toString());
+    // console.log(`Addr2 [${addr2.address}] Balance:`, ethers.utils.formatEther(await addr2.getBalance()).toString());
 
     const NftDescriptorV2 = await ethers.getContractFactory("NftDescriptorV2");
     const nftDescriptorV2 = await NftDescriptorV2.deploy();
