@@ -13,6 +13,6 @@ remappings = [
 ]
 optimizer = true
 optimizer_runs = 99999
-solc_version = "0.8.13"
+solc_version = "0.8.15"
 cache = true
 chain_id = 80001

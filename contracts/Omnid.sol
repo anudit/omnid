@@ -9,7 +9,7 @@
 ===============================*/
 
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity >=0.8.13 <0.9.0;
+pragma solidity >=0.8.15 <0.9.0;
 
 import "../node_modules/@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 import "../node_modules/@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
@@ -105,7 +105,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     function tokenURI(uint256 _tokenId) public view virtual override returns (string memory uri) {
-        address ownerAddress = ownerOf[_tokenId];
+        address ownerAddress = ownerOf(_tokenId);
         INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
         uri = descriptor.constructTokenURI(_tokenId, ownerAddress, deets);
     }
@@ -118,7 +118,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
 
         lastTimeStamp = block.timestamp;
         for (uint256 index = 0; index < upkeepQueue.length; index++) {
-            address ownerAddress = ownerOf[upkeepQueue[index]];
+            address ownerAddress = ownerOf(upkeepQueue[index]);
             INftDescriptor.IdDetails memory deets = addressToIdDetails[ownerAddress];
             if(block.timestamp - deets.refreshTime > 60*60*8){ // 8hrs
                 refreshScore(upkeepQueue[index]);
@@ -180,9 +180,9 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     function refreshScore(uint256 _tokenId) public {
         require(_tokenId < tokenCounter, "OMNID: Invalid _tokenId");
         Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfillRefresh.selector);
-        address tokenOwner = ownerOf[_tokenId];
+        address tokenOwner = ownerOf(_tokenId);
 
-        string memory reqApiAddress = string(abi.encodePacked(base, ownerOf[_tokenId]));
+        string memory reqApiAddress = string(abi.encodePacked(base, ownerOf(_tokenId)));
 
         request.add("get", reqApiAddress);
 
@@ -208,7 +208,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     function updateSkin(uint256 _tokenId, uint256 _newSkinId) public {
-        address tokenOwner = ownerOf[_tokenId];
+        address tokenOwner = ownerOf(_tokenId);
         if(tokenOwner != _msgSender()) revert OmnidOnlyNftOwner();
         require(descriptor.isValidSkinId(_newSkinId) == true, "Omnid:Invalid Skin");
 
@@ -220,7 +220,7 @@ contract Omnid is ERC721, ChainlinkClient, KeeperCompatibleInterface, BaseRelayR
     }
 
     function updateEtching(uint256 _tokenId, bytes32 _newEtching) public {
-        address tokenOwner = ownerOf[_tokenId];
+        address tokenOwner = ownerOf(_tokenId);
         if(tokenOwner != _msgSender()) revert OmnidOnlyNftOwner();
 
         INftDescriptor.IdDetails memory newDeets = addressToIdDetails[tokenOwner];

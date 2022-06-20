@@ -10,7 +10,7 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
 
@@ -19,12 +19,12 @@ jobs:
         with:
           version: nightly
 
-      - uses: actions/setup-node@v3.1.1
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
 
       - name: Cache pnpm modules
-        uses: actions/cache@v3.0.2
+        uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -45,7 +45,7 @@ jobs:
         continue-on-error: true
         with:
           target: 'contracts/'
-          solc-version: "0.8.13"
+          solc-version: "0.8.15"
           node-version: 16
       #     sarif: results.sarif
 
